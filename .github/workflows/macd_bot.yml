@@ -28,4 +28,4 @@ jobs:
           pip install yfinance pandas requests
 
       - name: Run MACD bot
-        run: python macd_bot.py
+        run: python macd_bot/macd_bot.py
