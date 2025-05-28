@@ -2,18 +2,21 @@ name: MACD Scanner
 
 on:
   schedule:
-    - cron: '0 * * * *'  # every hour
-  workflow_dispatch:
+    - cron: '0 * * * *'   # Run every hour
+  workflow_dispatch:       # Also allows manual trigger
 
 jobs:
   scan:
     runs-on: ubuntu-latest
-    env:
-      G_PAT: ${{ secrets.G_PAT }}
-    steps:
-      - uses: actions/checkout@v3
 
-      - name: Set up Python
+    env:
+      G_PAT: ${{ secrets.G_PAT }}   # Your GitHub PAT stored as secret
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
