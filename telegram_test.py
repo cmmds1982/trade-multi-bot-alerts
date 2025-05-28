@@ -1,22 +1,19 @@
-import requests
 import os
+import requests
 
-TOKEN = os.getenv("TELEGRAM_TOKEN")
-CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
-
-def send_telegram_message(message: str):
-    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
-    payload = {
-        "chat_id": CHAT_ID,
-        "text": message,
-        "parse_mode": "Markdown"
-    }
+def send_telegram_message(message):
+    bot_token = os.environ.get('TELEGRAM_TOKEN')
+    chat_id = os.environ.get('TELEGRAM_CHAT_ID')
+    if not bot_token or not chat_id:
+        print("Missing TELEGRAM_TOKEN or TELEGRAM_CHAT_ID")
+        return
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    payload = {"chat_id": chat_id, "text": message}
     response = requests.post(url, data=payload)
-    if response.status_code == 200:
-        print("Message sent successfully!")
-    else:
+    if response.status_code != 200:
         print(f"Failed to send message: {response.status_code} - {response.text}")
+    else:
+        print("Message sent!")
 
 if __name__ == "__main__":
-    test_message = "Hello from Telegram test bot! ✅"
-    send_telegram_message(test_message)
+    send_telegram_message("Hello from GitHub Actions test!")
