@@ -1,4 +1,9 @@
+import sys
+import os
 import yfinance as yf
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
 from get_tickers import get_tickers
 from telegram_config import send_telegram_message
 
